@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>her health matters · ai assistant</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fef3f7;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+        .chat-page { width: 100%; max-width: 800px; }
+        .main-title {
+            font-size: clamp(2rem, 8vw, 3rem);
+            font-weight: 500;
+            color: #d46b8d;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .main-title span {
+            display: block;
+            font-size: 1rem;
+            font-weight: 300;
+            color: #b5838d;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        .chat-container {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(212, 107, 141, 0.15);
+            overflow: hidden;
+        }
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #ffe4ec;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .ai-avatar {
+            width: 45px;
+            height: 45px;
+            background: #f8d7e3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #d46b8d;
+        }
+        .ai-info h2 {
+            font-size: 1.1rem;
+            color: #5e4b56;
+        }
+        .ai-status {
+            font-size: 0.8rem;
+            color: #b5838d;
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #fff9fc;
+        }
+        .message {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .bot-message { justify-content: flex-start; }
+        .user-message { justify-content: flex-end; }
+        .message-bubble {
+            max-width: 80%;
+            padding: 14px 18px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+        .bot-message .message-bubble {
+            background: white;
+            color: #5e4b56;
+            border: 1px solid #ffe4ec;
+            border-radius: 22px 22px 22px 8px;
+        }
+        .user-message .message-bubble {
+            background: #d46b8d;
+            color: white;
+            border-radius: 22px 22px 8px 22px;
+        }
+        .suggested-section {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #ffe4ec;
+        }
+        .question-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .chip {
+            background: #fef3f7;
+            border: 1px solid #ffe4ec;
+            color: #5e4b56;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .chip:hover {
+            background: #d46b8d;
+            color: white;
+        }
+        .chat-input-area {
+            padding: 20px;
+            background: white;
+            display: flex;
+            gap: 10px;
+        }
+        .input-wrapper {
+            flex: 1;
+            background: #fef3f7;
+            border-radius: 25px;
+            padding: 10px 16px;
+            border: 1px solid #ffe4ec;
+        }
+        textarea {
+            width: 100%;
+            border: none;
+            background: transparent;
+            resize: none;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .send-button {
+            background: #d46b8d;
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .disclaimer {
+            padding: 15px 20px;
+            background: #fff9fc;
+            font-size: 0.7rem;
+            color: #b5838d;
+            text-align: center;
+            border-top: 1px solid #ffe4ec;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-page">
+        <h1 class="main-title">
+            her health matters
+            <span>your ai assistant</span>
+        </h1>
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="ai-avatar">🌸</div>
+                <div class="ai-info">
+                    <h2>your ai assistant</h2>
+                    <div class="ai-status">online · private & anonymous</div>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-bubble">
+                        🌸 hi beautiful<br><br>
+                        ask me anything about your health — periods, pain, fatigue, mood, sleep, skin.<br><br>
+                        what would you like to talk about?
+                        <div style="font-size:0.6rem; color:#b5838d; margin-top:5px;">just now</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="suggested-section">
+                <div class="question-chips">
+                    <button class="chip" onclick="askQuestion('i have really bad cramps, what helps?')">🩹 cramps</button>
+                    <button class="chip" onclick="askQuestion('why am i so tired all the time?')">😴 tired</button>
+                    <button class="chip" onclick="askQuestion('my period is irregular')">🌊 irregular</button>
+                    <button class="chip" onclick="askQuestion('mood swings before period')">😢 mood swings</button>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="input-wrapper">
+                    <textarea id="userInput" placeholder="type your question..." rows="1"></textarea>
+                </div>
+                <button class="send-button" onclick="sendMessage()">→</button>
+            </div>
+
+            <div class="disclaimer">
+                not medical advice · always consult a healthcare provider
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = window.location.origin + '/api/chat';
+        let isWaiting = false;
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message || isWaiting) return;
+            
+            addMessage(message, 'user');
+            input.value = '';
+            
+            showTyping();
+            isWaiting = true;
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message})
+                });
+                const data = await response.json();
+                removeTyping();
+                addMessage(data.response, 'bot');
+            } catch (e) {
+                removeTyping();
+                addMessage("sorry, having trouble connecting", 'bot');
+            }
+            isWaiting = false;
+        }
+
+        function addMessage(text, sender) {
+            const div = document.getElementById('chatMessages');
+            const msg = document.createElement('div');
+            msg.className = `message ${sender}-message`;
+            msg.innerHTML = `<div class="message-bubble">${text.replace(/\n/g, '<br>')}</div>`;
+            div.appendChild(msg);
+            div.scrollTop = div.scrollHeight;
+        }
+
+        function showTyping() {
+            const div = document.getElementById('chatMessages');
+            const typing = document.createElement('div');
+            typing.className = 'message bot-message';
+            typing.id = 'typing';
+            typing.innerHTML = '<div class="message-bubble">...</div>';
+            div.appendChild(typing);
+            div.scrollTop = div.scrollHeight;
+        }
+
+        function removeTyping() {
+            const typing = document.getElementById('typing');
+            if (typing) typing.remove();
+        }
+
+        function askQuestion(q) {
+            document.getElementById('userInput').value = q;
+            sendMessage();
+        }
+
+        document.getElementById('userInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
