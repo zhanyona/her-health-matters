@@ -2,22 +2,16 @@ import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
-# ============================================
-# 1. СОЗДАНИЕ APP (ЭТО ВАЖНО!)
-# ============================================
+# Создание приложения
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, origins='*')
 
-# ============================================
-# 2. МАРШРУТЫ (ROUTES)
-# ============================================
-
-# Главная страница - отдает chat.html
+# Главная страница
 @app.route('/')
 def serve_chat():
     return send_from_directory('.', 'chat.html')
 
-# Проверка здоровья API
+# Проверка здоровья
 @app.route('/api/health', methods=['GET'])
 def health_check():
     return jsonify({
@@ -25,9 +19,7 @@ def health_check():
         'message': 'her health matters ai is running ✨'
     })
 
-# ============================================
-# 3. AI КЛАСС
-# ============================================
+# AI класс
 class WomenHealthAI:
     def get_response(self, message):
         message = message.lower()
@@ -36,87 +28,47 @@ class WomenHealthAI:
             return """🌸 **period pain relief**
 
 🫧 **immediate relief:**
-• heating pad on lower belly for 15-20 minutes
+• heating pad on lower belly
 • warm bath with epsom salts
-• gentle walking or stretching
 • ibuprofen (take with food)
 
-🌿 **natural remedies:**
-• ginger tea
-• dark chocolate (70%+ cocoa)
-
 🕊️ **see a doctor if:**
-• pain stops you from daily activities
-• pain between periods too"""
+• pain stops daily activities"""
         
         elif 'tired' in message or 'fatigue' in message:
             return """⚡ **understanding fatigue**
 
 🫧 **iron & periods:**
-• heavy periods can cause low iron
 • eat spinach, red meat, lentils
 
 😴 **sleep tips:**
 • same bedtime every night
-• no phones 1 hour before bed
-• no caffeine after 2pm
-
-🧠 **stress:**
-• try meditation, gentle movement"""
+• no phones before bed"""
         
         elif 'irregular' in message or 'cycle' in message:
             return """🌊 **understanding your cycle**
 
 🌸 **what's normal:**
-• cycle length: 21 to 35 days
+• cycle: 21 to 35 days
 • period: 3 to 7 days
 
-🦋 **common causes:**
-• stress
-• age (teens or approaching 40s)
-• weight changes
-
 🕊️ **see a doctor if:**
-• no period for 3+ months
-• bleeding between periods"""
-        
-        elif 'pms' in message or 'mood' in message:
-            return """🌙 **understanding pms**
-
-😢 **emotional symptoms:**
-• irritability
-• mood swings
-• anxiety
-
-🫧 **physical symptoms:**
-• bloating
-• breast tenderness
-• food cravings
-
-🌸 **what helps:**
-• 30 min walking daily
-• reduce salt and caffeine
-• track your cycle"""
+• no period for 3+ months"""
         
         else:
             return """🌸 **i'm here to help!**
 
 ask me about:
-• period pain and cramps
+• period pain
 • irregular cycles
-• fatigue and low energy
-• pms and mood swings
-• sleep problems
-• skin issues
+• fatigue
+• mood swings
 
-what's on your mind today? 💕"""
+what's on your mind? 💕"""
 
-# Создаем экземпляр AI
 ai = WomenHealthAI()
 
-# ============================================
-# 4. ЧАТ ENDPOINT
-# ============================================
+# Чат endpoint
 @app.route('/api/chat', methods=['POST'])
 def chat():
     try:
@@ -124,7 +76,7 @@ def chat():
         user_message = data.get('message', '').strip()
         
         if not user_message:
-            return jsonify({'error': 'No message provided'}), 400
+            return jsonify({'error': 'No message'}), 400
         
         response = ai.get_response(user_message)
         
@@ -135,3 +87,10 @@ def chat():
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+# ВАЖНО: Этот блок ЗАПУСКАЕТ сервер через waitress
+if __name__ == '__main__':
+    from waitress import serve
+    port = int(os.environ.get('PORT', 10000))
+    print(f"Starting server on port {port}")
+    serve(app, host='0.0.0.0', port=port)
