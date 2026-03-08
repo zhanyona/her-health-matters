@@ -1,7 +1,6 @@
 import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import re
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, origins='*')
@@ -15,10 +14,10 @@ def health_check():
     return jsonify({
         'status': 'healthy',
         'message': 'her health matters ai is running ✨',
-        'version': '4.0 - smart ai'
+        'version': '5.0 - ultra smart ai'
     })
 
-class SmartWomenHealthAI:
+class UltraSmartWomenHealthAI:
     def __init__(self):
         self.conversation_history = []
     
@@ -29,743 +28,1628 @@ class SmartWomenHealthAI:
         # Store in history
         self.conversation_history.append(message)
         
-        # Check for different topics
-        if any(word in message_lower for word in ['period', 'menstrual', 'cycle', 'monthly']):
+        # PERIOD & MENSTRUAL
+        if any(word in message_lower for word in ['period', 'menstrual', 'monthly', 'blood', 'bleeding']):
             return self.answer_period_questions(message)
         
-        elif any(word in message_lower for word in ['cramp', 'pain', 'hurt', 'ache']):
+        # PAIN & CRAMPS
+        elif any(word in message_lower for word in ['cramp', 'pain', 'hurt', 'ache', 'sore', 'stabbing', 'sharp', 'throbbing']):
             return self.answer_pain_questions(message)
         
-        elif any(word in message_lower for word in ['tired', 'fatigue', 'exhausted', 'energy']):
+        # FATIGUE & ENERGY
+        elif any(word in message_lower for word in ['tired', 'fatigue', 'exhausted', 'energy', 'sleepy', 'drained', 'weak', 'no energy']):
             return self.answer_fatigue_questions(message)
         
-        elif any(word in message_lower for word in ['pms', 'mood', 'emotional', 'cry', 'sad', 'anxious']):
+        # MOOD & EMOTIONS
+        elif any(word in message_lower for word in ['mood', 'emotional', 'cry', 'sad', 'anxious', 'depressed', 'irritable', 'angry', 'upset', 'stress', 'overwhelmed', 'panic']):
             return self.answer_mood_questions(message)
         
-        elif any(word in message_lower for word in ['irregular', 'late', 'missed', 'early']):
+        # CYCLE IRREGULARITIES
+        elif any(word in message_lower for word in ['irregular', 'late', 'missed', 'early', 'cycle', 'when is my period', 'delayed']):
             return self.answer_cycle_questions(message)
         
-        elif any(word in message_lower for word in ['headache', 'migraine', 'head hurts']):
+        # HEADACHES & MIGRAINES
+        elif any(word in message_lower for word in ['headache', 'migraine', 'head hurts', 'pressure in head', 'throbbing head', 'tension headache']):
             return self.answer_headache_questions(message)
         
-        elif any(word in message_lower for word in ['sleep', 'insomnia', 'can\'t sleep']):
+        # SLEEP PROBLEMS
+        elif any(word in message_lower for word in ['sleep', 'insomnia', "can't sleep", 'wake up', 'restless', 'nightmare', 'tired in morning', 'fall asleep']):
             return self.answer_sleep_questions(message)
         
-        elif any(word in message_lower for word in ['skin', 'acne', 'breakout', 'pimple']):
+        # SKIN ISSUES
+        elif any(word in message_lower for word in ['skin', 'acne', 'breakout', 'pimple', 'rash', 'dry skin', 'oily skin', 'cyst', 'blackhead', 'whitehead', 'scar']):
             return self.answer_skin_questions(message)
         
-        elif any(word in message_lower for word in ['weight', 'gain', 'lose', 'appetite']):
+        # WEIGHT & BODY
+        elif any(word in message_lower for word in ['weight', 'gain', 'lose', 'appetite', 'hungry', 'full', 'bmi', 'diet', 'food', 'eating', 'craving']):
             return self.answer_weight_questions(message)
         
-        elif any(word in message_lower for word in ['doctor', 'gyno', 'specialist', 'should i see']):
+        # PREGNANCY & FERTILITY
+        elif any(word in message_lower for word in ['pregnant', 'pregnancy', 'fertility', 'conceive', 'trying to get pregnant', 'ovulation', 'fertile', 'baby']):
+            return self.answer_pregnancy_questions(message)
+        
+        # DIGESTIVE ISSUES
+        elif any(word in message_lower for word in ['bloating', 'gas', 'stomach', 'nausea', 'vomit', 'diarrhea', 'constipated', 'digestion', 'gut', 'cramps stomach']):
+            return self.answer_digestive_questions(message)
+        
+        # BREAST HEALTH
+        elif any(word in message_lower for word in ['breast', 'chest', 'boob', 'tender breast', 'lump', 'nipple']):
+            return self.answer_breast_questions(message)
+        
+        # HAIR ISSUES
+        elif any(word in message_lower for word in ['hair', 'hair loss', 'thinning hair', 'bald', 'hair growth', 'facial hair', 'excess hair']):
+            return self.answer_hair_questions(message)
+        
+        # SEXUAL HEALTH
+        elif any(word in message_lower for word in ['sex', 'pain during sex', 'libido', 'sex drive', 'std', 'sti', 'infection', 'discharge', 'itch']):
+            return self.answer_sexual_health_questions(message)
+        
+        # DOCTOR QUESTIONS
+        elif any(word in message_lower for word in ['doctor', 'gyno', 'gynecologist', 'specialist', 'should i see', 'when to go', 'appointment', 'check up']):
             return self.answer_doctor_questions(message)
         
+        # BIRTH CONTROL
+        elif any(word in message_lower for word in ['birth control', 'contraception', 'pill', 'iud', 'implant', 'shot', 'patch', 'ring', 'condom']):
+            return self.answer_birth_control_questions(message)
+        
+        # DEFAULT
         else:
             return self.answer_general(message)
     
     def answer_period_questions(self, question):
-        return """🌸 **understanding your period**
+        return """🌸 understanding your period
 
-A period is when your body sheds the lining of your uterus. This happens about once a month if you're not pregnant.
+A period happens when your body sheds the lining of your uterus. This is completely normal and healthy.
 
-**what's normal:**
-• Cycle length: 21 to 35 days (28 days is average)
+what's normal:
+• Cycle length: 21 to 35 days (28 days is average but everyone is different)
 • Period length: 3 to 7 days
-• Flow: light to heavy, possible small clots
-• Color: bright red to dark brown is normal
+• Flow: light to medium to heavy (can change day to day)
+• Color: bright red, dark red, brown, or pink - all normal!
+• Small clots: up to the size of a dime are normal
 
-**what happens in your body:**
-Your hormones (estrogen and progesterone) rise and fall throughout the month. When they drop at the end of your cycle, your uterine lining sheds - that's your period!
-
-**common symptoms (normal):**
-• Mild cramping
-• Bloating
+common period symptoms:
+• Mild cramping in lower belly
+• Bloating (your tummy might feel bigger)
 • Breast tenderness
-• Fatigue
-• Mood changes
-• Food cravings
+• Fatigue and low energy
+• Mood changes (irritability, sadness)
+• Food cravings (especially chocolate and carbs)
+• Headaches
+• Lower back pain
+• Oily skin or breakouts
 
-**when to see a doctor:**
-• Periods suddenly become very painful
-• You're soaking through a pad/tampon every 1-2 hours
-• Periods less than 21 days or more than 35 days apart
+what helps with period symptoms:
+• Heat therapy - heating pad or hot water bottle on your belly
+• Gentle movement - walking, stretching, yoga
+• Warm baths with epsom salts
+• Over-the-counter pain relief (ibuprofen works best for cramps)
+• Rest when you need to (your body is working hard!)
+• Stay hydrated - drink extra water
+• Iron-rich foods if bleeding is heavy (spinach, red meat, beans)
+
+when to see a doctor:
+• Periods suddenly become much more painful
+• You're soaking through a pad or tampon every 1-2 hours
+• Periods last longer than 7 days
+• Cycles are shorter than 21 days or longer than 35 days
 • Bleeding between periods
 • No period for 3+ months (and not pregnant)
+• Severe pain that medication doesn't help
 
 what specifically would you like to know about your period? 💕"""
     
     def answer_pain_questions(self, question):
         if 'cramp' in question.lower():
-            return """🩹 **understanding period cramps**
+            return """🩹 understanding period cramps
 
-period cramps (dysmenorrhea) happen because your uterus contracts to shed its lining. these contractions are triggered by chemicals called prostaglandins - more prostaglandins = more pain.
+Period cramps happen because your uterus contracts to shed its lining. These contractions are triggered by chemicals called prostaglandins. More prostaglandins = more pain.
 
-**why some women have worse cramps:**
-• higher prostaglandin levels
-• endometriosis (tissue grows outside uterus)
-• fibroids (benign growths)
-• pelvic inflammatory disease
-• stress (makes pain feel worse)
+why some women have worse cramps:
+• Higher prostaglandin levels
+• Endometriosis (tissue grows outside uterus)
+• Fibroids (benign growths)
+• Adenomyosis (tissue grows into uterine wall)
+• Pelvic inflammatory disease
+• Stress (makes pain feel worse)
+• Age (teens and 20s often have more cramps)
 
-**immediate relief:**
-• 🔥 **heat therapy:** heating pad or hot water bottle on lower belly for 15-20 minutes (works as well as ibuprofen!)
-• 💊 **medication:** ibuprofen or naproxen work best because they reduce prostaglandins. take with food!
-• 🧘 **gentle movement:** light walking, stretching, child's pose in yoga
-• 🛁 **warm bath:** add epsom salts for muscle relaxation
-• ☕ **herbal tea:** ginger, chamomile, or raspberry leaf tea
+immediate relief:
+• Heat therapy - heating pad or hot water bottle on lower belly for 15-20 minutes (works as well as ibuprofen!)
+• Over-the-counter medication - ibuprofen or naproxen work best because they reduce prostaglandins. Take with food!
+• Gentle movement - light walking, stretching, child's pose in yoga
+• Warm bath - add epsom salts for muscle relaxation
+• Herbal tea - ginger, chamomile, or raspberry leaf tea
+• Massage - gently massage your lower belly
+• orgasm - can help release tension and pain (seriously!)
 
-**natural remedies (ask doctor first):**
-• magnesium - helps muscles relax
-• vitamin B1 - studies show it helps
-• omega-3 fatty acids (fish oil) - anti-inflammatory
-• acupressure or acupuncture
+natural remedies (ask doctor first):
+• Magnesium - helps muscles relax
+• Vitamin B1 - studies show it helps with cramps
+• Omega-3 fatty acids (fish oil) - anti-inflammatory
+• Acupressure or acupuncture
+• Essential oils - lavender, clary sage diluted and massaged on belly
 
-**foods that help:**
-• anti-inflammatory foods: berries, nuts, leafy greens
-• warm foods: soups, warm oatmeal
-• dark chocolate (magnesium + mood boost!)
-• bananas (potassium helps with cramping)
-• ginger (add to tea or meals)
+foods that help:
+• Anti-inflammatory foods: berries, nuts, leafy greens, turmeric
+• Warm foods: soups, warm oatmeal
+• Dark chocolate (magnesium + mood boost)
+• Bananas (potassium helps with cramping)
+• Ginger (add to tea or meals)
+• Pineapple (contains bromelain, anti-inflammatory)
 
-**foods to avoid before/during period:**
-• salty foods (increase bloating)
-• caffeine (can increase tension)
-• sugary foods (cause energy crashes)
-• processed foods
+foods to avoid before/during period:
+• Salty foods (increase bloating)
+• Caffeine (can increase tension and cramps)
+• Sugary foods (cause energy crashes and inflammation)
+• Processed foods
+• Alcohol (can make cramps worse)
 
-**when to see a doctor:**
-• pain stops you from going to school/work
-• over-the-counter meds don't help at all
-• pain suddenly gets worse than usual
-• you're over 25 and pain is new/getting worse
-• pain between periods too
-• heavy bleeding with clots
+when to see a doctor:
+• Pain stops you from going to school or work
+• Over-the-counter meds don't help at all
+• Pain suddenly gets worse than usual
+• You're over 25 and pain is new or getting worse
+• Pain between periods too
+• Heavy bleeding with large clots
+• Pain during sex
+• Pain with fever or vomiting
 
-**possible conditions:**
-• **endometriosis** - tissue similar to uterine lining grows outside the uterus
-• **fibroids** - non-cancerous growths
-• **adenomyosis** - tissue grows into uterine wall
-• **pelvic inflammatory disease** - infection
+possible conditions that need medical attention:
+• Endometriosis - tissue similar to uterine lining grows outside the uterus
+• Fibroids - non-cancerous growths in the uterus
+• Adenomyosis - tissue grows into uterine wall
+• Pelvic inflammatory disease - infection
+• Ovarian cysts
 
-what's your pain like? tell me more and i'll help you figure it out 💕"""
+what's your pain like? Where is it located? How long does it last? Tell me more and I'll help you figure it out 💕"""
+        
+        elif 'back' in question.lower():
+            return """🩹 understanding back pain
+
+Back pain is very common and can be related to your cycle or other factors.
+
+period-related back pain:
+• Lower back pain often happens with period cramps
+• Caused by the same prostaglandins that cause cramps
+• Can feel like a dull ache or sharp pain
+• Usually starts a day or two before period
+• Lasts through the first few days of bleeding
+
+what helps for period back pain:
+• Heating pad on lower back
+• Gentle stretching (child's pose, cat-cow)
+• Over-the-counter pain relief
+• Warm bath
+• Gentle massage
+• Rest
+
+other causes of back pain:
+• Poor posture (especially from sitting at computer)
+• Muscle strain from exercise
+• Sleeping position
+• Stress (makes muscles tense)
+• Sciatica
+• Kidney issues (if pain is higher up)
+
+when to see a doctor for back pain:
+• Pain after injury or fall
+• Pain with fever
+• Numbness or tingling in legs
+• Loss of bladder or bowel control
+• Pain that doesn't improve with rest
+• Pain that wakes you at night
+
+what does your back pain feel like? When did it start? 💫"""
         
         else:
-            return """🩹 **understanding pain**
+            return """🩹 understanding pain
 
-pain is your body's way of telling you something needs attention.
+Pain is your body's way of telling you something needs attention.
 
-**types of pain common in women:**
+types of pain common in women:
+• Cramping pain - usually period-related, in lower belly
+• Headaches and migraines - can be hormonal
+• Breast pain - often before period
+• Back pain - can be period-related or from posture
+• Pelvic pain - needs medical attention
+• Joint pain - can be related to hormones
+• Muscle pain - from tension or exercise
 
-• **cramping pain** - usually period-related, in lower belly
-• **headaches/migraines** - can be hormonal
-• **breast pain** - often before period
-• **back pain** - can be period-related or from posture
-• **pelvic pain** - needs medical attention
+track your pain:
+Write down:
+• When it happens (before/during/after period?)
+• Where exactly it hurts
+• What it feels like (sharp, dull, throbbing, stabbing, burning)
+• How bad it is (1-10 scale)
+• What makes it better or worse
+• How long it lasts
+• Any other symptoms with it
 
-**track your pain:**
-write down:
-• when it happens (before/during/after period?)
-• where exactly it hurts
-• what it feels like (sharp, dull, throbbing)
-• what makes it better/worse
-• how long it lasts
+This information is super helpful for doctors!
 
-this information is SO helpful for doctors!
+red flags - see a doctor if:
+• Sudden severe pain
+• Pain with fever
+• Pain after injury
+• Pain that wakes you at night
+• Pain lasting more than a few days
+• Pain with unexplained weight loss
+• Pain with bleeding (not period)
 
-**red flags (see a doctor):**
-• sudden severe pain
-• pain with fever
-• pain after injury
-• pain that wakes you at night
-• pain lasting more than a few days
-
-what kind of pain are you experiencing? 🌸"""
+what kind of pain are you experiencing? Where is it? 🌸"""
     
     def answer_fatigue_questions(self, question):
-        return """⚡ **understanding fatigue**
+        return """⚡ understanding fatigue
 
-feeling tired all the time is SO common, but let's figure out why YOU might be exhausted:
+Feeling tired all the time is SO common, especially for women. Let's figure out why YOU might be exhausted:
 
-**common causes in women:**
+🩸 iron deficiency / anemia
+• Very common with heavy periods
+• Your body needs iron to make red blood cells that carry oxygen
+• Without enough iron, your cells don't get enough oxygen = you feel exhausted
+• Other signs: pale skin, cold hands and feet, dizziness, brittle nails, shortness of breath
+• Iron-rich foods: red meat, spinach, lentils, beans, fortified cereals, pumpkin seeds
+• Tip: eat with vitamin C (orange juice, citrus, bell peppers) to help absorption
 
-🩸 **iron deficiency / anemia**
-• very common with heavy periods
-• symptoms: pale skin, cold hands/feet, dizziness, brittle nails
-• iron-rich foods: red meat, spinach, lentils, beans, fortified cereals
-• tip: eat with vitamin C (orange juice) to help absorption
+😴 poor sleep quality
+• It's not just how many hours, but how well you sleep
+• Signs of poor sleep: waking up multiple times, not feeling rested, needing caffeine to function
+• Sleep hygiene tips:
+  - Same bedtime and wake time (even on weekends!)
+  - No phones 1 hour before bed (blue light disrupts melatonin)
+  - Cool, dark, quiet room
+  - No caffeine after 2pm
+  - Limit alcohol (it ruins sleep quality)
+  - No big meals before bed
 
-😴 **poor sleep quality**
-• not just hours, but how well you sleep
-• sleep hygiene tips:
-  - same bedtime/wake time (even weekends!)
-  - no phones 1 hour before bed (blue light disrupts melatonin)
-  - cool, dark, quiet room
-  - no caffeine after 2pm
-  - limit alcohol (it ruins sleep quality)
+🧠 stress and mental health
+• Stress hormones (cortisol) can exhaust your body
+• Anxiety and depression both cause fatigue
+• Your brain working overtime = tired body
+• Signs: can't turn your brain off, worrying, feeling overwhelmed
+• Helpful: therapy, meditation, time in nature, talking to friends, deep breathing
 
-🧠 **stress and mental health**
-• stress hormones (cortisol) exhaust your body
-• anxiety and depression both cause fatigue
-• helpful: therapy, meditation, time in nature, talking to friends
+⚡ thyroid issues
+• Very common in women!
+• Hypothyroidism (underactive) causes fatigue, weight gain, feeling cold, dry skin, hair thinning
+• Hyperthyroidism (overactive) causes fatigue too, along with weight loss, racing heart, anxiety
+• Simple blood test can check this
 
-⚡ **thyroid issues**
-• very common in women!
-• hypothyroidism causes fatigue, weight gain, feeling cold
-• simple blood test can check this
+🥗 nutrition deficiencies
+• Vitamin D deficiency - very common, especially in winter (fatigue, bone pain, low mood)
+• Vitamin B12 deficiency - more common in vegetarians (fatigue, numbness, brain fog)
+• Magnesium deficiency - fatigue, muscle cramps, trouble sleeping
+• Eat a variety of whole foods and consider supplements after talking to doctor
 
-🥗 **nutrition deficiencies**
-• vitamin D deficiency (very common!)
-• vitamin B12 deficiency (more common in vegetarians)
-• magnesium deficiency
+💧 dehydration
+• Even mild dehydration causes fatigue
+• Aim for 8 glasses of water daily (more if you exercise or it's hot)
+• Coffee and tea don't count (they're diuretics)
+• Signs of dehydration: dark urine, dry mouth, headache
 
-💧 **dehydration**
-• even mild dehydration causes fatigue
-• aim for 8 glasses of water daily
+🩺 other medical causes
+• Diabetes (fatigue, thirst, frequent urination)
+• Chronic fatigue syndrome (extreme fatigue lasting months)
+• Autoimmune diseases (like lupus, rheumatoid arthritis)
+• Heart conditions
+• Sleep apnea (pauses in breathing during sleep)
 
-**energy-boosting tips:**
-• gentle movement (walking actually BOOSTS energy)
-• protein with every meal
-• don't skip breakfast
-• short power naps (10-20 min)
-• sunlight exposure in morning
+energy-boosting tips:
+• Gentle movement (walking actually BOOSTS energy)
+• Protein with every meal
+• Don't skip breakfast
+• Short power naps (10-20 minutes, no longer!)
+• Sunlight exposure in morning
+• Reduce sugar (causes energy crashes)
+• Stay social (loneliness is draining)
 
-**when to see a doctor:**
-• fatigue lasting more than 2 weeks
-• fatigue with unexplained weight changes
-• feeling cold all the time
-• shortness of breath
-• racing heart
-• depression symptoms
+when to see a doctor:
+• Fatigue lasting more than 2 weeks
+• Fatigue with unexplained weight changes
+• Feeling cold all the time
+• Shortness of breath
+• Racing heart
+• Depression or anxiety
+• Not feeling better with rest
 
-what does YOUR fatigue feel like? when did it start? 💫"""
+what does YOUR fatigue feel like? When did it start? Is it related to your cycle? Let's figure this out together 💕"""
     
     def answer_mood_questions(self, question):
-        return """😢 **understanding mood and emotions**
+        return """😢 understanding your feelings
 
-your feelings are valid, and they're often connected to what's happening in your body:
+Your emotions are valid, and they're often connected to what's happening in your body:
 
-**hormones and mood:**
+hormones and mood:
 
-🌸 **estrogen:**
-• boosts serotonin (your 'feel-good' chemical)
-• higher in first half of cycle = usually better mood
-• drops before period = can affect mood
+🌸 estrogen:
+• Boosts serotonin (your 'feel-good' chemical)
+• Higher in first half of cycle = usually better mood
+• Drops before period = can affect mood
+• Also drops after pregnancy (postpartum)
 
-🌙 **progesterone:**
-• rises after ovulation
-• can cause fatigue, mood changes
-• drops sharply before period
+🌙 progesterone:
+• Rises after ovulation
+• Can cause fatigue, mood changes
+• Has calming effect (like natural valium)
+• Drops sharply before period
 
-**common patterns:**
+hormonal mood patterns:
 
-**before period (pms):**
-• irritability
-• sadness
-• anxiety
-• feeling overwhelmed
-• crying easily
-• this is REAL and affects up to 75% of women!
+🌱 week 1-2 (after period):
+• Estrogen rising
+• Usually feel more energetic, optimistic
+• Good time for socializing, projects
 
-**during period:**
-• relief as hormones balance
-• some feel low from physical discomfort
+🌼 week 3 (ovulation):
+• Peak estrogen
+• Often feel confident, sociable
+• Some feel extra emotional
 
-**pms vs pmdd:**
+🍂 week 4 (before period):
+• Progesterone drops
+• Estrogen drops
+• PMS symptoms start
+• Can feel irritable, sad, anxious
 
-**pms (premenstrual syndrome):**
-• mild to moderate symptoms
-• doesn't severely impact daily life
-• affects up to 75% of women
+common PMS mood symptoms:
+• Irritability (snapping at people)
+• Mood swings (happy then crying)
+• Sadness or depression
+• Anxiety or tension
+• Feeling overwhelmed
+• Difficulty concentrating (brain fog)
+• Crying easily
+• Anger
+• Withdrawing from others
 
-**pmdd (premenstrual dysphoric disorder):**
-• severe symptoms
-• affects daily life and relationships
-• intense depression, anger, anxiety
-• affects 3-8% of women
-• treatable with medical help!
+PMS vs PMDD:
 
-**what helps:**
+🌸 PMS (premenstrual syndrome):
+• Mild to moderate symptoms
+• Doesn't severely impact daily life
+• Affects up to 75% of women
+• Manageable with lifestyle changes
 
-🟢 **for cycle-related mood:**
-• track your cycle - knowing "this is pms" helps
-• be extra kind to yourself during luteal phase
-• reduce commitments if possible
-• exercise (even just walking helps!)
-• avoid alcohol (it's a depressant)
-• eat complex carbs (help stabilize mood)
+🌪️ PMDD (premenstrual dysphoric disorder):
+• Severe symptoms
+• Affects daily life and relationships
+• Intense depression, anger, anxiety
+• Feel hopeless or out of control
+• Affects 3-8% of women
+• Needs medical treatment
+• Can include physical symptoms too
 
-🟢 **supplements (ask doctor first):**
-• calcium - studies show it significantly reduces pms
-• magnesium - helps with mood and bloating
-• vitamin B6 - helps with mood symptoms
+what helps with mood:
 
-🟢 **lifestyle:**
-• prioritize sleep
-• time in nature
-• creative expression
-• talk to someone you trust
+🟢 lifestyle changes:
+• Exercise - 30 minutes daily (walking, dancing, whatever you enjoy)
+• Sunlight - get outside, especially in morning
+• Sleep - prioritize 7-9 hours (crucial for mood!)
+• Reduce stress - whatever works for you
+• Avoid alcohol - it's a depressant
+• Limit caffeine - can increase anxiety
+• Eat regular meals - blood sugar swings affect mood
 
-**when to see a doctor:**
-• mood affecting daily life for 2+ weeks
-• can't get out of bed
-• loss of interest in things you loved
-• changes in appetite or sleep
-• thoughts of self-harm
+🟢 diet for mood:
+• Complex carbs - whole grains, veggies (boost serotonin)
+• Protein with each meal - helps stabilize blood sugar
+• Omega-3s - salmon, walnuts, flax seeds (brain health)
+• Magnesium - leafy greens, nuts, dark chocolate (calming)
+• Limit sugar - causes energy crashes and mood swings
+• Stay hydrated - dehydration affects mood
 
-**crisis support (if you're in the US):**
-• call 988 (suicide & crisis lifeline)
-• text HOME to 741741
-• go to emergency room
-• tell someone you trust
+🟢 supplements (ask doctor first):
+• Calcium - 1200mg daily (studies show it significantly reduces PMS)
+• Magnesium - helps with mood and physical symptoms
+• Vitamin B6 - helps with mood and brain function
+• Vitamin D - low levels linked to depression
+• Omega-3s - anti-inflammatory, brain health
 
-**remember:** mental health is health. you deserve support. 🤍
+🟢 tracking:
+• Use an app to track your cycle and mood for 2-3 months
+• You'll likely see a pattern
+• This helps you PREPARE for tough days
+• Also helpful for doctor if symptoms are severe
 
-how have YOU been feeling? i'm here to listen."""
+when to see a doctor:
+• Mood affecting daily life for 2+ weeks
+• Not just before period - any time of month
+• Can't get out of bed
+• Loss of interest in things you loved
+• Changes in appetite or sleep
+• Thoughts of self-harm
+• Using substances to cope
+• Panic attacks
+
+crisis support:
+If you're having thoughts of self-harm:
+• Call 988 (Suicide & Crisis Lifeline in US)
+• Text HOME to 741741
+• Go to emergency room
+• Tell someone you trust
+• You are not alone. You deserve help.
+
+remember: Mental health is health. You deserve support. 🤍
+
+how have YOU been feeling? I'm here to listen without judgment."""
     
     def answer_cycle_questions(self, question):
-        return """🌊 **understanding your menstrual cycle**
+        return """🌊 understanding your menstrual cycle
 
-let's talk about what "irregular" actually means:
+Let's talk about what's normal and what's not when it comes to your cycle:
 
-**normal cycle:**
-• length: 21 to 35 days
-• period: 3 to 7 days
-• variation: up to 7-9 days difference is still normal
+what's normal:
+• Cycle length: 21 to 35 days (count from first day of period to next first day)
+• Period length: 3 to 7 days
+• Flow: light to heavy (can vary day to day)
+• Variation: up to 7-9 days difference from cycle to cycle is still normal
+• Age matters: teens and women in 40s often have more variation
 
-**what causes irregular periods:**
+the menstrual cycle phases:
 
-🟢 **common and usually not serious:**
-• **age:** first 2-3 years after first period (teenagers)
-• **age:** perimenopause (40s and 50s)
-• **stress:** high stress affects hormones
-• **travel:** jet lag can temporarily affect cycle
-• **illness:** getting sick can delay period
-• **weight changes:** significant loss or gain
-• **exercise:** very intense training (common in athletes)
+🌸 menstrual phase (days 1-5):
+• You're on your period
+• Hormones are at their lowest
+• You might feel tired, introspective
+• Good for rest and gentle movement
 
-🟡 **may need medical attention:**
+🌱 follicular phase (days 6-14):
+• Estrogen rises
+• Energy increases
+• Mood improves
+• Good for new projects, exercise
 
-**pcos (polycystic ovary syndrome):**
-• very common (affects 1 in 10 women)
-• symptoms: irregular periods, acne, weight gain, excess hair
-• manageable with lifestyle and medication
+🌼 ovulation (around day 14):
+• Egg is released
+• Estrogen peaks
+• You might feel your best
+• Some feel mild pain (mittelschmerz)
 
-**thyroid issues:**
-• both overactive and underactive thyroid affect periods
-• symptoms: fatigue, weight changes, temperature sensitivity
-• simple blood test can diagnose
+🍂 luteal phase (days 15-28):
+• Progesterone rises
+• If no pregnancy, hormones drop
+• PMS symptoms may appear
+• Energy may decrease
 
-**high prolactin:**
-• can be caused by stress, medication, or small tumor
-• symptoms: irregular periods, milky discharge
+reasons for irregular cycles:
 
-**birth control:**
-• hormonal iud or progestin-only methods can make periods irregular or stop them
+🟢 common and usually not serious:
+• Age - first 2-3 years after first period (teenagers)
+• Age - perimenopause (40s and 50s)
+• Stress - high stress affects hormones
+• Travel - jet lag can temporarily affect cycle
+• Illness - getting sick can delay period
+• Weight changes - significant loss or gain
+• Exercise - very intense training
+• Medications - some antibiotics, antidepressants
+• Breastfeeding - can stop periods
 
-**when to see a doctor:**
-• no period for 3+ months
-• cycles consistently shorter than 21 days or longer than 35 days
-• bleeding between periods
-• severe pain with irregular cycles
-• trying to get pregnant and cycles are irregular
-• other symptoms like acne, weight changes, excess hair
+🟡 may need medical attention:
 
-**track your cycle!**
-use an app or calendar to track:
-• when period starts and ends
-• how heavy the flow is
-• any symptoms (pain, mood changes)
-• this information is GOLD for your doctor
+PCOS (polycystic ovary syndrome):
+• Very common (affects 1 in 10 women)
+• Symptoms: irregular periods, acne, weight gain (especially around middle), excess facial/body hair, thinning scalp hair
+• Cause: hormone imbalance
+• Manageable with lifestyle and medication
 
-what's your specific situation? how old are you, and what does "irregular" mean for you? 🌸"""
+thyroid issues:
+• Both overactive and underactive thyroid affect periods
+• Symptoms: fatigue, weight changes, temperature sensitivity, hair changes
+• Simple blood test can diagnose
+
+high prolactin:
+• Can be caused by stress, medication, or pituitary tumor
+• Symptoms: irregular periods, milky discharge from nipples, headaches
+
+birth control:
+• Hormonal IUD or progestin-only methods can make periods irregular or stop them
+• This is normal for these methods
+• Periods usually return to normal when you stop
+
+when to see a doctor:
+• No period for 3+ months (and not pregnant)
+• Cycles consistently shorter than 21 days or longer than 35 days
+• Bleeding between periods
+• Severe pain with irregular cycles
+• Trying to get pregnant and cycles are irregular
+• Other symptoms like acne, weight changes, excess hair
+• Sudden change in your regular pattern
+
+track your cycle!
+Use an app or calendar to track:
+• When period starts and ends
+• How heavy the flow is
+• Any pain or symptoms
+• Mood changes
+• This information is GOLD for your doctor
+
+what's your specific situation? How old are you? What does irregular mean for you? Tell me more 🌸"""
     
     def answer_headache_questions(self, question):
-        return """🤕 **understanding headaches**
+        return """🤕 understanding headaches
 
-headaches are super common, especially in women. let's figure out what kind you might have:
+Headaches are super common, especially in women. Let's figure out what kind you might have:
 
-**types of headaches:**
+types of headaches:
 
-🤕 **tension headaches:**
-• feels like a tight band around your head
-• dull, aching pain
-• often from stress, poor posture, eye strain
-• usually both sides of head
-• **helps:** heat on neck/shoulders, gentle stretching, massage, check your posture
+🤕 tension headaches:
+• Feels like a tight band around your head
+• Dull, aching pain
+• Often from stress, poor posture, eye strain
+• Usually both sides of head
+• Can last 30 minutes to several days
+• Neck and shoulder muscles may be tight
 
-⚡ **migraines:**
-• throbbing pain, often one side
-• nausea, sensitivity to light/sound
-• can last hours to days
-• sometimes preceded by "aura" (visual disturbances)
-• **helps:** rest in dark quiet room, cold compress on forehead, hydration, identify triggers
+⚡ migraines:
+• Throbbing or pulsing pain, often one side
+• Moderate to severe pain
+• Nausea or vomiting
+• Sensitivity to light, sound, smells
+• Can last 4 to 72 hours
+• Sometimes preceded by "aura" (visual disturbances like flashing lights, zigzag lines, blind spots)
+• May have warning signs like food cravings, mood changes, yawning
 
-🔄 **hormonal headaches:**
-• happen right before or during period
-• from drop in estrogen
-• can be migraine-like or tension-type
-• **helps:** track with cycle, magnesium supplements might help prevent them
+🔄 hormonal headaches:
+• Happen right before or during your period
+• From drop in estrogen
+• Can be migraine-like or tension-type
+• Often improve during pregnancy
+• May worsen with birth control pills
 
-**common triggers:**
-• stress
-• lack of sleep
-• dehydration
-• caffeine (too much OR withdrawal)
-• certain foods (aged cheese, processed meats, alcohol)
-• bright lights
-• strong smells
-• weather changes
+🌪️ sinus headaches:
+• Pain in forehead, cheeks, behind nose
+• Pressure that gets worse when bending over
+• Usually with other sinus symptoms (congestion, runny nose)
+• Often from allergies or infection
 
-**what helps:**
+🤯 cluster headaches:
+• Severe pain around one eye
+• Happens in clusters (daily for weeks then stops)
+• More common in men
+• Eye may be red, watery, droopy
 
-**for immediate relief:**
-• rest in dark, quiet room
-• cold or warm compress on head/neck
-• hydration (drink water!)
-• over-the-counter pain relievers (use as directed)
-• gentle neck stretches
-• caffeine (can help some headaches, but be careful)
+common triggers:
+• Stress (most common trigger)
+• Lack of sleep or too much sleep
+• Dehydration
+• Caffeine (too much OR withdrawal)
+• Skipping meals
+• Certain foods: aged cheese, processed meats, chocolate, MSG, artificial sweeteners
+• Alcohol (especially red wine)
+• Bright lights, loud sounds, strong smells
+• Weather changes
+• Hormonal changes
+• Screen time / eye strain
 
-**for prevention:**
-• regular sleep schedule
-• stay hydrated
-• regular meals (don't skip!)
-• stress management
-• exercise regularly
-• identify and avoid triggers
-• keep a headache diary
+what helps:
 
-**when to see a doctor:**
-• "worst headache of your life"
-• with fever, stiff neck, confusion
-• after head injury
-• new type of headache after age 50
-• headaches that keep getting worse
-• daily or near-daily headaches
+for immediate relief:
+• Rest in dark, quiet room
+• Cold or warm compress on head or neck
+• Hydration (drink water!)
+• Over-the-counter pain relievers (use as directed)
+• Gentle neck stretches
+• Caffeine (can help some headaches, but be careful - can also trigger)
+• Sleep if possible
+• Massage (temples, neck, shoulders)
 
-what do YOUR headaches feel like? when do they happen? 💫"""
+for prevention:
+• Regular sleep schedule
+• Stay hydrated
+• Regular meals (don't skip!)
+• Stress management
+• Exercise regularly
+• Identify and avoid triggers
+• Keep a headache diary
+• Limit screen time, take breaks
+• Check your posture
+
+when to see a doctor:
+• "Worst headache of your life"
+• With fever, stiff neck, confusion
+• After head injury
+• New type of headache after age 50
+• Headaches that keep getting worse
+• Daily or near-daily headaches
+• Headaches that wake you at night
+• With vision changes
+• With weakness or numbness
+
+what do YOUR headaches feel like? When do they happen? Do they relate to your cycle? 💫"""
     
     def answer_sleep_questions(self, question):
-        return """🌙 **understanding sleep**
+        return """🌙 understanding sleep
 
-sleep problems affect women differently throughout the cycle:
+Sleep problems affect so many women. Let's figure out what's going on with YOUR sleep:
 
-**cycle and sleep:**
+cycle and sleep:
 
-🌸 **week 1-2 (after period):**
-• usually sleep well
-• estrogen helps with sleep quality
+🌸 week 1-2 (follicular phase):
+• Usually sleep well
+• Estrogen helps with sleep quality
+• Feel more rested
 
-🌙 **week 3-4 (before period):**
-• may have trouble falling/staying asleep
-• progesterone affects body temperature
-• pms symptoms can disrupt sleep
+🌙 week 3-4 (luteal phase):
+• May have trouble falling asleep
+• May wake up during the night
+• Progesterone increases body temperature (disrupts sleep)
+• PMS symptoms (cramps, bloating) can wake you
+• Dreams may be more vivid
 
-**common sleep issues:**
+common sleep issues:
 
-😴 **can't fall asleep:**
-• racing thoughts? write them down before bed
-• create a wind-down routine (same thing every night)
-• try 4-7-8 breathing: inhale 4, hold 7, exhale 8
-• no phones in bed (they're sleep killers!)
-• magnesium before bed might help (ask doctor)
+😴 can't fall asleep:
+• Racing thoughts? Write them down before bed
+• Create a wind-down routine (same thing every night)
+• Try 4-7-8 breathing: inhale 4 seconds, hold 7 seconds, exhale 8 seconds
+• No phones in bed (they're sleep killers!)
+• Get up if not asleep in 20 minutes (do something boring, then try again)
+• Magnesium before bed might help (ask doctor)
+• Melatonin (short-term use only, talk to doctor)
 
-😴 **wake up in the middle of the night:**
-• don't look at the clock!
-• if not back asleep in 20 min, get up and do something boring
-• check if alcohol is disrupting sleep (it does!)
-• keep room cool and dark
+😴 wake up in the middle of the night:
+• Don't look at the clock! (creates anxiety)
+• If not back asleep in 20 min, get up and do something boring (read a book, not screens)
+• Check if alcohol is disrupting sleep (it does!)
+• Keep room cool and dark
+• White noise might help
 
-😴 **wake up tired:**
-• could be sleep quality, not quantity
-• possible sleep apnea (more common in women than thought)
-• restless leg syndrome (common in pregnancy)
-• not enough deep sleep
+😴 wake up tired:
+• Could be sleep quality, not quantity
+• Sleep apnea (more common in women than thought) - pauses in breathing
+• Restless leg syndrome (urge to move legs) - common in pregnancy
+• Not enough deep sleep
+• Anxiety or depression
 
-**sleep hygiene checklist:**
-• same bedtime/wake time every day (even weekends!)
-• cool room (65-68°f / 18-20°c)
-• dark room (blackout curtains)
-• quiet (white noise if helpful)
-• comfy mattress/pillows
-• no caffeine after 2pm
-• no alcohol 3 hours before bed
-• no big meals before bed
-• exercise earlier in day (not right before bed)
-• no screens 1 hour before bed
+😴 nightmares or vivid dreams:
+• Can be worse before period
+• Stress related
+• Medication side effects
+• Pregnancy (very common)
 
-**natural sleep aids (ask doctor first):**
-• magnesium glycinate
-• chamomile tea
-• lavender essential oil
-• melatonin (short-term use only)
+sleep hygiene checklist:
+• Same bedtime and wake time every day (even weekends!)
+• Cool room (65-68°F / 18-20°C)
+• Dark room (blackout curtains or eye mask)
+• Quiet (earplugs or white noise if needed)
+• Comfy mattress and pillows
+• No caffeine after 2pm
+• No alcohol 3 hours before bed (ruins sleep quality)
+• No big meals before bed
+• Exercise earlier in day (not right before bed)
+• No screens 1 hour before bed (blue light disrupts melatonin)
+• Bed only for sleep and sex (train your brain)
 
-**when to see a doctor:**
-• insomnia lasting more than a few weeks
-• sleep problems affecting daily life
-• you stop breathing during sleep (partner may notice)
-• extreme daytime sleepiness
+natural sleep aids (ask doctor first):
+• Magnesium glycinate - helps relaxation
+• Chamomile tea - calming
+• Lavender essential oil - on pillow or in diffuser
+• Valerian root - herbal supplement
+• Tart cherry juice - contains natural melatonin
+• Passionflower tea
 
-tell me about YOUR sleep - what's the hardest part? 💫"""
+when to see a doctor:
+• Insomnia lasting more than a few weeks
+• Sleep problems affecting daily life
+• You stop breathing during sleep (partner may notice)
+• Loud snoring
+• Extreme daytime sleepiness (falling asleep during day)
+• Restless legs that keep you awake
+• Depression or anxiety
+
+tell me about YOUR sleep - what's the hardest part? How many hours do you usually get? 💫"""
     
     def answer_skin_questions(self, question):
-        return """🧴 **understanding your skin**
+        return """🧴 understanding your skin
 
-your skin is connected to your hormones! here's how:
+Your skin is connected to what's happening inside your body, especially your hormones:
 
-**skin through your cycle:**
+skin through your cycle:
 
-🌸 **week 1-2 (after period):**
-• skin usually looks clearer
-• estrogen helps skin stay plump and glowing
+🌸 week 1-2 (after period):
+• Skin usually looks clearer
+• Estrogen helps skin stay plump and glowing
+• Good time for trying new products
+• Wounds heal faster
 
-🌼 **week 3 (ovulation):**
-• some women get an "ovulation glow"
-• higher estrogen
+🌼 week 3 (ovulation):
+• Some women get an "ovulation glow"
+• Higher estrogen = more collagen
+• Skin may look its best
 
-🌙 **week 4 (before period):**
-• progesterone increases oil production
-• pores can clog = breakouts
-• inflammation increases
+🌙 week 4 (before period):
+• Progesterone increases oil production
+• Pores can clog = breakouts
+• Inflammation increases
+• Skin may be more sensitive
+• Breakouts typically on jawline, chin, lower face
 
-**types of breakouts:**
+types of breakouts:
 
-🧴 **hormonal acne:**
-• usually on jawline, chin, lower face
-• happens around your period
-• deep, cystic pimples that hurt
-• **helps:** start using treatment a few days BEFORE your period
+🧴 hormonal acne:
+• Usually on jawline, chin, lower face
+• Happens around your period
+• Deep, cystic pimples that hurt
+• Come back same time each month
+• Helps: start treatment a few days BEFORE your period
 
-🧴 **stress acne:**
-• anywhere on face
-• from cortisol increasing oil
-• often during exams, stressful times
+🧴 stress acne:
+• Anywhere on face
+• From cortisol increasing oil
+• Often during exams, stressful times
+• Can be inflamed and red
 
-🧴 **diet-related:**
-• high sugar/dairy can trigger some people
-• everyone's different - track what affects YOU
+🧴 diet-related:
+• High sugar foods can trigger some people
+• Dairy affects some (everyone's different)
+• Track what affects YOU
+• Common triggers: dairy, sugar, white bread, whey protein
 
-**what helps:**
+🧴 makeup-related:
+• Pores clogged from makeup
+• Not cleansing properly
+• Dirty makeup brushes
+• Products too heavy for your skin
 
-🟢 **skincare routine:**
-• gentle cleanser (harsh products make skin produce MORE oil)
-• moisturizer even if oily (hydration is key!)
-• spf every day (hormones can cause pigmentation)
-• change pillowcases frequently
-• don't pick! (causes scarring)
+what helps:
 
-🟢 **ingredients that help:**
-• **salicylic acid:** unclogs pores
-• **benzoyl peroxide:** kills bacteria
-• **niacinamide:** reduces inflammation
-• **retinoids:** cell turnover (use at night, start slow)
-• **azelaic acid:** great for hormonal acne and dark spots
+🟢 skincare routine basics:
+• Gentle cleanser (harsh products make skin produce MORE oil)
+• Moisturizer even if oily (hydration is key!)
+• SPF every day (hormones can cause pigmentation)
+• Change pillowcases frequently (at least weekly)
+• Don't pick! (causes scarring and spreads bacteria)
+• Clean your phone screen
+• Wash face after sweating
 
-🟢 **for period-related breakouts:**
-• start using salicylic acid a few days BEFORE your period
-• some women find spearmint tea helps (reduces androgens)
-• be extra gentle with skin during pms
+🟢 ingredients that help:
+• Salicylic acid - unclogs pores, great for blackheads and whiteheads
+• Benzoyl peroxide - kills bacteria, good for inflamed acne
+• Niacinamide - reduces inflammation, helps with redness
+• Retinoids - cell turnover, prevents clogged pores (use at night, start slow)
+• Azelaic acid - great for hormonal acne and dark spots
+• Sulfur - absorbs oil, reduces inflammation
+• Tea tree oil - natural antibacterial (dilute first!)
 
-🟢 **lifestyle:**
-• drink water (hydration helps skin)
-• manage stress
-• healthy diet with less sugar
-• enough sleep (beauty sleep is real!)
+🟢 for period-related breakouts:
+• Start using treatment a few days BEFORE your period
+• Be extra gentle with skin during PMS
+• Some women find spearmint tea helps (reduces androgens)
+• Don't introduce new products right before period (skin is sensitive)
 
-**when to see a dermatologist:**
-• severe cystic acne
-• acne leaving scars
-• not responding to otc treatments
-• with irregular periods (could be pcos)
+🟢 lifestyle:
+• Drink water (hydration helps skin)
+• Manage stress
+• Healthy diet with less sugar
+• Enough sleep (beauty sleep is real!)
+• Exercise (increases blood flow to skin)
+• Don't touch your face during the day
 
-what's YOUR skin concern right now? 💕"""
+when to see a dermatologist:
+• Severe cystic acne
+• Acne leaving scars or dark spots
+• Not responding to over-the-counter treatments
+• With irregular periods (could be PCOS)
+• Sudden severe acne in adult years
+• Acne affecting your mental health
+
+what's YOUR skin concern right now? Where are you breaking out? 💕"""
     
     def answer_weight_questions(self, question):
-        return """📊 **understanding weight and body**
+        return """📊 understanding your body and weight
 
-weight fluctuations in women are NORMAL, especially with your cycle:
+Weight fluctuations in women are NORMAL, especially with your cycle. Let's talk about it:
 
-**cycle-related weight changes:**
+cycle-related weight changes:
 
-🌸 **week before period (luteal phase):**
-• water retention can add 2-5 pounds
-• breast tissue changes
-• bloating
-• this is NOT fat gain - it's water!
-• goes away after period starts
+🌸 week before period (luteal phase):
+• Water retention can add 2-5 pounds
+• Breast tissue changes (swelling, tenderness)
+• Bloating (your jeans feel tighter)
+• Constipation can happen
+• This is NOT fat gain - it's water and normal bodily changes
+• It goes away after your period starts
 
-🌸 **during period:**
-• usually "whoosh" effect as water leaves
-• weight drops back to normal
+🌸 during period:
+• Usually "whoosh" effect as water leaves
+• Weight drops back to normal
+• You might feel lighter
 
-**other factors affecting weight:**
+🌸 week after period:
+• Usually lowest weight of month
+• Good time to weigh if you track
 
-⚖️ **stress:**
-• cortisol causes water retention
-• can affect where you store fat (more around middle)
+other factors affecting weight:
 
-😴 **sleep:**
-• poor sleep affects hunger hormones (ghrelin and leptin)
-• can increase cravings
+⚖️ stress:
+• Cortisol (stress hormone) causes water retention
+• Can increase belly fat storage
+• Can cause cravings for sugar and fat
+• Emotional eating
 
-💊 **medications:**
-• some birth control can affect weight
-• antidepressants
-• steroids
+😴 sleep:
+• Poor sleep affects hunger hormones (ghrelin and leptin)
+• Ghrelin goes up = more hungry
+• Leptin goes down = don't feel full
+• Can increase cravings for carbs
 
-🩺 **medical conditions:**
-• pcos (weight gain, especially around middle)
-• thyroid issues
-• insulin resistance
+💊 medications:
+• Some birth control can cause water retention
+• Antidepressants (some)
+• Steroids
+• Antihistamines (some people)
+• Always check side effects
 
-**healthy approach to weight:**
+🩺 medical conditions:
+• PCOS - weight gain especially around middle, insulin resistance
+• Thyroid issues - hypothyroidism causes weight gain
+• Insulin resistance - difficulty losing weight
+• Depression - can affect appetite and activity
 
-🟢 **focus on how you FEEL, not just numbers:**
-• energy levels
-• strength
-• mood
-• sleep quality
-• digestion
-• how clothes fit
+age:
+• Metabolism naturally slows with age
+• Muscle mass decreases if not maintained
+• Hormonal changes in perimenopause
 
-🟢 **sustainable habits:**
-• eat enough protein and fiber
-• stay hydrated
-• move in ways you enjoy
-• get enough sleep
-• manage stress
-• don't restrict (leads to bingeing)
+healthy approach to weight:
 
-🟢 **when weighing:**
-• if you weigh yourself, do it at same time of day
-• same day of cycle (e.g., day 5 of your period)
-• remember the 2-5 pound cycle fluctuation is NORMAL
+🟢 focus on how you FEEL, not just numbers:
+• Energy levels throughout the day
+• Strength and stamina
+• Mood
+• Sleep quality
+• Digestion
+• How clothes fit
+• Confidence
 
-**intuitive eating principles:**
-• eat when hungry, stop when full
-• all foods fit (no "good" or "bad" foods)
-• movement should feel good, not punishing
-• health is about more than weight
+🟢 sustainable habits:
+• Eat enough protein (helps with fullness, muscle maintenance)
+• Eat enough fiber (veggies, fruits, whole grains)
+• Stay hydrated (thirst can feel like hunger)
+• Move in ways you enjoy (not punishment)
+• Get enough sleep (crucial!)
+• Manage stress
+• Don't restrict (leads to bingeing)
+• Eat when hungry, stop when full
 
-**when to see a doctor:**
-• unexplained weight loss or gain
-• weight changes with other symptoms
-• extreme measures to control weight
-• disordered eating patterns
-• preoccupation with weight affecting daily life
+🟢 when weighing:
+• If you weigh yourself, do it at same time of day (morning after bathroom)
+• Same day of cycle (e.g., Day 5 of your period)
+• Remember the 2-5 pound cycle fluctuation is NORMAL
+• Consider weighing less often (weekly, not daily)
+• Weight is just one data point, not your worth
 
-**you deserve to feel good in your body** regardless of the number on the scale. what's YOUR concern about weight? 💕"""
+intuitive eating principles:
+• Eat when hungry, stop when full
+• All foods fit (no "good" or "bad" foods)
+• Movement should feel good, not punishing
+• Health is about more than weight
+• Your body knows what it needs
+
+red flags - disordered eating:
+• Obsessing over weight and food
+• Severe restriction
+• Binge eating
+• Purging
+• Exercise compulsion
+• Extreme fear of weight gain
+• Avoiding social situations with food
+
+when to see a doctor:
+• Unexplained weight loss
+• Unexplained weight gain
+• Weight changes with other symptoms
+• Extreme measures to control weight
+• Disordered eating patterns
+• Preoccupation with weight affecting daily life
+• Missed periods from weight changes
+
+you deserve to feel good in your body regardless of the number on the scale. what's YOUR concern about weight? 💕"""
+    
+    def answer_pregnancy_questions(self, question):
+        return """🤰 understanding pregnancy and fertility
+
+Whether you're trying to conceive, worried about pregnancy, or just curious, here's helpful information:
+
+early signs of pregnancy:
+• Missed period (most common sign)
+• Nausea (morning sickness - can happen any time of day)
+• Breast tenderness (similar to period but often more intense)
+• Fatigue (extreme tiredness)
+• Frequent urination (hormone changes increase blood flow to kidneys)
+• Food aversions or cravings
+• Heightened sense of smell
+• Mood swings
+• Implantation bleeding (light spotting around when period would be due)
+• Bloating
+• Constipation
+
+if you think you might be pregnant:
+1. Take a home pregnancy test (most accurate after missed period)
+2. First morning urine is best (most concentrated)
+3. If positive, call a healthcare provider
+4. Start prenatal vitamins with folic acid (400-800mcg)
+5. Avoid alcohol, smoking, certain foods
+
+if you're trying to conceive:
+
+🌸 track your cycle:
+• Ovulation happens about 14 days BEFORE your next period (not after)
+• Most fertile window: 5 days before ovulation + day of ovulation
+• Signs of ovulation: cervical mucus like egg white, mild cramping on one side, increased libido
+• Ovulation predictor kits can help
+• Tracking apps can help but aren't always accurate
+
+🌸 optimize fertility:
+• Start prenatal vitamins with folic acid (ideally 3 months before trying)
+• Limit caffeine (under 200mg/day - about 1-2 cups coffee)
+• No alcohol
+• Healthy weight (both underweight and overweight can affect fertility)
+• Manage stress
+• Don't smoke
+• Regular moderate exercise
+• Track your cycle
+• Have sex regularly (every 2-3 days throughout cycle)
+
+🌸 when to see a fertility specialist:
+• Under 35: after 1 year of trying
+• 35-40: after 6 months
+• Over 40: sooner rather than later
+• If you have irregular periods or known issues
+• If you've had multiple miscarriages
+
+if you're worried about unplanned pregnancy:
+
+🆘 emergency contraception:
+• "Morning after pill" (Plan B, Take Action) - works up to 5 days, more effective sooner
+• Available at pharmacies without prescription
+• Ella (more effective, requires prescription in some places)
+• Copper IUD - works as emergency contraception up to 5 days (most effective option)
+• Not the same as abortion pill
+
+🤰 abortion options (if applicable):
+• Medication abortion (up to 10-11 weeks)
+• In-clinic procedure (later in pregnancy)
+• Laws vary by location
+• Planned Parenthood and local clinics can help
+
+resources:
+• Planned Parenthood (if in US)
+• Local health clinics
+• Your regular gynecologist
+• Crisis pregnancy centers (be aware they may have specific agendas)
+
+what specifically do you want to know about? I'm here to help without judgment 💕"""
+    
+    def answer_digestive_questions(self, question):
+        return """🫧 understanding digestive issues
+
+Digestive problems are super common, especially around your period. Let's talk about it:
+
+cycle-related digestive issues:
+
+🌸 before period:
+• Bloating is VERY common (water retention)
+• Constipation (progesterone slows digestion)
+• Gas
+• Feeling full quickly
+• Food cravings (especially carbs)
+
+🌸 during period:
+• Diarrhea or loose stools (prostaglandins affect bowels too)
+• Cramping (can be digestive or uterine)
+• Nausea (from pain or hormones)
+• Loss of appetite
+
+🌸 after period:
+• Usually digestion returns to normal
+• Less bloating
+
+common digestive issues:
+
+🫧 bloating:
+• Can be from hormones, food, or both
+• Reduce salt before period
+• Avoid carbonated drinks
+• Eat slowly, chew well
+• Peppermint tea can help
+• Gentle movement (walking)
+• Over-the-counter simethicone (Gas-X)
+
+💩 constipation:
+• Drink more water (aim for 8 glasses)
+• Increase fiber slowly (veggies, fruits, whole grains)
+• Prunes or prune juice
+• Warm lemon water in morning
+• Gentle exercise
+• Magnesium supplements (ask doctor first)
+• Don't ignore the urge to go
+
+💧 diarrhea:
+• Stay hydrated (water, electrolyte drinks)
+• BRAT diet: bananas, rice, applesauce, toast
+• Avoid dairy, greasy foods, caffeine
+• Probiotics may help
+• Imodium for severe cases (short-term only)
+• See doctor if bloody or persistent
+
+😖 nausea:
+• Ginger tea or candied ginger
+• Small, frequent meals (empty stomach makes nausea worse)
+• Avoid strong smells
+• Peppermint
+• Sea bands (acupressure)
+• Eat crackers before getting up
+
+🔥 heartburn / acid reflux:
+• Avoid spicy, fatty, acidic foods
+• Don't lie down after eating
+• Eat smaller meals
+• Elevate head of bed
+• Antacids (Tums, Rolaids)
+• See doctor if persistent
+
+irritable bowel syndrome (IBS):
+• Very common in women
+• Symptoms: abdominal pain, bloating, diarrhea or constipation
+• Often worse with stress and around period
+• Low FODMAP diet helps many
+• Stress management crucial
+• See gastroenterologist
+
+when to see a doctor:
+• Blood in stool
+• Unexplained weight loss
+• Severe pain
+• Persistent vomiting
+• Fever with digestive symptoms
+• Symptoms waking you at night
+• Family history of colon cancer
+• Symptoms lasting more than a few weeks
+
+what digestive issues are you having? When do they happen? 💫"""
+    
+    def answer_breast_questions(self, question):
+        return """🩺 understanding breast health
+
+Breast changes are normal throughout your cycle and life. Here's what you should know:
+
+cycle-related breast changes:
+
+🌸 before period (luteal phase):
+• Breast tenderness and sensitivity
+• Swelling (breasts may feel fuller/heavier)
+• Lumpy feeling (from hormonal changes)
+• This is normal and goes away after period
+
+🌸 during period:
+• Symptoms usually improve
+• Breasts return to normal size
+
+🌸 after period:
+• Breasts are usually least tender
+• Good time for self-exam
+
+types of breast pain:
+
+🫧 cyclic breast pain:
+• Related to your period
+• Affects both breasts
+• Feels dull, heavy, achy
+• Gets better after period
+• Very common and normal
+
+🫧 non-cyclic breast pain:
+• Not related to period
+• May be one breast only
+• Sharp or burning pain
+• Could be from injury, cyst, or infection
+• See doctor if persistent
+
+breast lumps:
+
+🌸 what's normal:
+• Breasts naturally have lumpy tissue (like orange pulp)
+• Lumps that change with your cycle are usually normal
+• Cysts (fluid-filled sacs) are common
+• Fibroadenomas (solid, rubbery lumps) are common in young women
+
+🔴 when to see a doctor:
+• New lump that doesn't go away after period
+• Hard lump that feels different from surrounding tissue
+• Lump that grows over time
+• Skin changes: dimpling, puckering, redness, thickening
+• Nipple changes: discharge (especially if bloody), turning inward, rash
+• Swelling in armpit
+• Persistent pain in one spot
+
+breast self-exam:
+• Do it at the same time each month (day 7-10 of cycle is ideal)
+• Look in mirror with arms at sides, then raised
+• Check for changes in size, shape, skin
+• Feel while lying down (breast tissue spreads out)
+• Use pads of fingers, not tips
+• Cover entire breast and armpit
+• Know what's normal for YOU
+
+risk factors for breast cancer:
+• Age (increases with age)
+• Family history
+• Genetic mutations (BRCA1, BRCA2)
+• Early period (before 12) or late menopause (after 55)
+• Never being pregnant or first pregnancy after 30
+• Hormone therapy
+• Dense breast tissue
+• Alcohol consumption
+• Obesity
+
+reducing risk:
+• Regular exercise
+• Healthy weight
+• Limit alcohol (1 drink/day max)
+• Breastfeeding (reduces risk)
+• Regular screenings
+• Know your family history
+
+when to see a doctor:
+• Any new lump
+• Skin changes
+• Nipple discharge
+• Persistent pain
+• For routine screening (mammograms starting at 40-45, earlier if high risk)
+
+do you have specific concerns about your breasts? 💕"""
+    
+    def answer_hair_questions(self, question):
+        return """💇‍♀️ understanding hair changes
+
+Hair changes can be frustrating. Let's talk about what might be happening:
+
+normal hair cycle:
+• Hair grows about 1/2 inch per month
+• We lose 50-100 hairs daily (normal!)
+• Hair goes through growth, resting, and shedding phases
+
+cycle-related hair changes:
+
+🌸 estrogen effect:
+• Estrogen promotes hair growth and thickness
+• Hair may look fuller and shinier when estrogen is high
+• During pregnancy (high estrogen), many women have gorgeous hair
+• After pregnancy (estrogen drops), many experience hair shedding (postpartum hair loss)
+
+🌙 progesterone effect:
+• Can affect oil production on scalp
+• May make hair feel oilier before period
+
+types of hair loss:
+
+😔 telogen effluvium:
+• Temporary hair shedding from stress, illness, childbirth, major weight loss
+• Hair falls out 2-3 months after trigger
+• Usually resolves on its own in 6 months
+
+😔 female pattern hair loss:
+• Gradual thinning, especially at crown and part line
+• Genetic
+• Can start any time after puberty
+• Progressive but treatable
+
+😔 alopecia areata:
+• Patchy hair loss
+• Autoimmune condition
+• Round bald patches
+• Can affect any hair-bearing area
+
+😔 traction alopecia:
+• From tight hairstyles (braids, ponytails, extensions)
+• Preventable by loosening styles
+
+😔 hormonal causes:
+
+PCOS:
+• Excess androgens can cause thinning on scalp
+• AND excess hair on face/body (hirsutism)
+• Other symptoms: irregular periods, acne, weight gain
+
+thyroid issues:
+• Both overactive and underactive thyroid affect hair
+• Hair may be thin, brittle, or falling out
+• Other symptoms: fatigue, weight changes, temperature sensitivity
+
+menopause:
+• Estrogen drops
+• Hair may become thinner
+• May also get facial hair growth
+
+what helps:
+
+🟢 for hair health:
+• Gentle handling (don't brush when wet, avoid heat)
+• Protein-rich diet (hair is made of protein)
+• Iron-rich foods (low iron causes hair loss)
+• Biotin (may help if deficient)
+• Omega-3s (scalp health)
+• Vitamins D and B12
+• Scalp massage (increases blood flow)
+
+🟢 medical treatments (doctor prescribed):
+• Minoxidil (Rogaine) for female pattern hair loss
+• Spironolactone (blocks androgens)
+• Birth control pills (regulate hormones)
+• Thyroid medication if needed
+
+🟢 for excess facial/body hair:
+• Shaving, waxing, threading
+• Laser hair removal
+• Electrolysis
+• Prescription creams (eflornithine)
+• Spironolactone (reduces androgens)
+
+when to see a doctor:
+• Sudden or patchy hair loss
+• Hair loss with other symptoms (irregular periods, fatigue, weight changes)
+• Bald spots
+• Itching or pain on scalp
+• You're worried about it
+
+what hair concerns do you have? Thinning, shedding, or excess growth? 💫"""
+    
+    def answer_sexual_health_questions(self, question):
+        return """💕 understanding sexual health
+
+Sexual health is an important part of overall health. Let's talk about it without embarrassment:
+
+cycle and libido:
+
+🌸 during period:
+• Libido varies (some higher, some lower)
+• Sex is safe during period (though messier)
+• Can help with cramps (orgasm releases feel-good hormones)
+
+🌱 follicular phase (after period):
+• Libido increases as estrogen rises
+• Natural lubrication increases
+• May feel more interested in sex
+
+🌼 ovulation:
+• Libido peaks (body's way of encouraging reproduction)
+• Highest fertility
+• May feel most attracted to partners
+
+🍂 luteal phase (before period):
+• Libido may decrease
+• May feel less interested
+• Physical discomfort (bloating, tenderness) can affect desire
+
+common sexual health concerns:
+
+😔 low libido:
+• Can be hormonal (birth control, antidepressants)
+• Stress and fatigue (major factors)
+• Relationship issues
+• Body image concerns
+• Pain during sex
+• Normal to fluctuate
+
+🩹 pain during sex:
+• Can be from lack of lubrication
+• Vaginismus (muscles tighten involuntarily)
+• Endometriosis
+• Pelvic inflammatory disease
+• Ovarian cysts
+• Infections
+• ALWAYS worth discussing with doctor
+
+🩺 vaginal discharge:
+• Normal discharge changes throughout cycle
+• Clear and stretchy at ovulation (like egg white)
+• Thicker and white before period
+• Signs of infection: unusual color (green, gray), strong smell, itching, burning
+
+common infections:
+
+🦠 yeast infection:
+• Thick, white, cottage-cheese discharge
+• Itching and burning
+• Redness and swelling
+• Triggers: antibiotics, high sugar, hormones, tight clothing
+• Treatment: over-the-counter antifungal creams or suppositories
+
+🦠 bacterial vaginosis (BV):
+• Thin, gray or white discharge
+• Fishy odor (worse after sex)
+• Usually no itching
+• Treatment: prescription antibiotics
+
+🦠 UTIs (urinary tract infections):
+• Burning when peeing
+• Urgent need to pee
+• Pees small amounts frequently
+• Cloudy or bloody urine
+• Treatment: antibiotics, drink water
+
+🦠 STIs (sexually transmitted infections):
+• Can have no symptoms!
+• Unusual discharge, sores, bumps, pain
+• Get tested regularly if sexually active
+
+protection and prevention:
+• Condoms (protect against STIs and pregnancy)
+• Dental dams for oral sex
+• Regular testing
+• Communicate with partners
+• HPV vaccine (prevents cervical cancer)
+
+when to see a doctor:
+• Pain during sex
+• Unusual discharge or odor
+• Sores, bumps, or blisters
+• Burning with urination
+• Missed period
+• Concern about STI exposure
+• For regular check-ups (annual exam, Pap smear)
+
+any specific questions? I'm here to help without judgment 💕"""
+    
+    def answer_birth_control_questions(self, question):
+        return """💊 understanding birth control
+
+There are many options. Here's what you should know:
+
+hormonal methods:
+
+💊 combination pill:
+• Contains estrogen and progestin
+• Take daily at same time
+• 91-99% effective with perfect use
+• Can regulate periods, reduce cramps, improve acne
+• Side effects: nausea, breast tenderness, mood changes
+• Not for smokers over 35 or those with migraine with aura
+
+💊 progestin-only pill (mini-pill):
+• Take daily at same time (3 hour window)
+• Good for those who can't take estrogen
+• May have irregular bleeding
+• 91-99% effective
+
+💉 Depo-Provera shot:
+• Shot every 3 months
+• 94-99% effective
+• May cause weight gain
+• Can take months to get pregnant after stopping
+
+💍 vaginal ring (NuvaRing):
+• Insert for 3 weeks, remove for 1 week
+• 91-99% effective
+• Changed monthly
+• Similar to pill hormones
+
+💊 implant (Nexplanon):
+• Small rod in arm
+• Lasts up to 5 years
+• 99% effective
+• May have irregular bleeding
+
+🛡️ hormonal IUD (Mirena, Kyleena, Liletta, Skyla):
+• T-shaped device in uterus
+• Lasts 3-7 years depending on brand
+• 99% effective
+• Periods often become lighter or stop
+
+non-hormonal methods:
+
+🛡️ copper IUD (Paragard):
+• No hormones
+• Lasts up to 10-12 years
+• 99% effective
+• Can make periods heavier and more crampy
+• Can be used as emergency contraception
+
+🛡️ barrier methods:
+• Condoms (male and female) - 82-98% effective, protect against STIs
+• Diaphragm - needs fitting, used with spermicide
+• Cervical cap
+• Sponge
+
+🛡️ fertility awareness:
+• Tracking cycle to avoid sex on fertile days
+• Requires strict tracking (temperature, cervical mucus)
+• 76-88% effective with typical use
+• Good for those who can't use hormones
+
+🛡️ withdrawal (pulling out):
+• 78-96% effective
+• Risky (pre-cum can contain sperm)
+
+🛡️ sterilization:
+• Tubal ligation (tubes tied)
+• Essure (coils in tubes, not available in all countries)
+• Vasectomy for men
+• Permanent
+
+emergency contraception:
+
+🆘 Plan B (levonorgestrel):
+• Take within 72 hours (sooner = better)
+• Available over-the-counter
+• Works by delaying ovulation
+• Less effective if over 165 lbs
+
+🆘 Ella (ulipristal acetate):
+• Prescription only
+• Works up to 5 days
+• More effective than Plan B
+• Works closer to ovulation
+
+🆘 Copper IUD:
+• Inserted within 5 days
+• Most effective option (99.9%)
+• Provides ongoing contraception
+
+choosing a method:
+• Consider effectiveness, side effects, convenience, cost
+• Think about future pregnancy plans
+• Discuss with healthcare provider
+• It's okay to try and switch!
+
+questions to ask yourself:
+• Do I want hormones?
+• How long do I want protection?
+• Am I good at taking daily pills?
+• Do I need STI protection (condoms)?
+• What are the side effects?
+• What's my budget?
+
+always discuss with your healthcare provider to find what's right for YOU 💕"""
     
     def answer_doctor_questions(self, question):
-        return """🩺 **when to see a doctor**
+        return """🩺 when to see a doctor
 
-it's hard to know when something needs medical attention. here's a guide:
+It's hard to know when something needs medical attention. Here's a guide:
 
-**for periods:**
+for periods:
 
-🩸 **see a doctor if:**
-• no period for 3+ months (and not pregnant)
-• bleeding between periods
-• soaking through pad/tampon every 1-2 hours
-• periods less than 21 days or more than 35 days apart
-• severe pain that otc meds don't help
-• suddenly much heavier or more painful than usual
+🩸 see a doctor if:
+• No period for 3+ months (and not pregnant)
+• Bleeding between periods
+• Soaking through pad/tampon every 1-2 hours
+• Periods less than 21 days or more than 35 days apart
+• Severe pain that OTC meds don't help
+• Suddenly much heavier or more painful than usual
+• Periods lasting more than 7 days
+• Large clots (bigger than a quarter)
 
-**for pain:**
+for pain:
 
-🤕 **see a doctor if:**
-• pain that stops daily activities
-• new pain after age 25
-• pain with fever, vomiting
-• pain during sex
-• pain that wakes you at night
+🤕 see a doctor if:
+• Pain that stops daily activities
+• New pain after age 25
+• Pain with fever or vomiting
+• Pain during sex
+• Pain that wakes you at night
+• Pain with unexplained weight loss
+• Pain after injury
 
-**for breast health:**
+for breast health:
 
-🩺 **see a doctor if:**
-• new lump or thickening
-• nipple discharge (especially if bloody)
-• skin changes (dimpling, redness, rash)
-• persistent pain in one spot
-• nipple turning inward
+🩺 see a doctor if:
+• New lump (especially if hard, doesn't move)
+• Lump that doesn't go away after period
+• Skin changes: dimpling, puckering, redness
+• Nipple discharge (especially if bloody)
+• Nipple turning inward
+• Rash on breast
+• Swelling in armpit
+• Persistent pain in one spot
 
-**for general health:**
+for general health:
 
-❤️ **see a doctor if:**
-• unexplained weight loss
-• unexplained fever
-• lump anywhere
-• changes in moles
-• persistent cough or hoarseness
-• changes in bowel/bladder habits
-• extreme fatigue
+❤️ see a doctor if:
+• Unexplained weight loss or gain
+• Unexplained fever
+• Lump anywhere
+• Changes in moles (ABCDE: asymmetry, border, color, diameter, evolving)
+• Persistent cough or hoarseness
+• Changes in bowel or bladder habits
+• Extreme fatigue lasting weeks
+• Shortness of breath
+• Chest pain
+• Severe headache
 
-**for mental health:**
+for mental health:
 
-🧠 **see a doctor if:**
-• feeling sad, anxious, or hopeless for 2+ weeks
-• thoughts of self-harm
-• can't do daily activities
-• using substances to cope
-• panic attacks
+🧠 see a doctor if:
+• Feeling sad, anxious, or hopeless for 2+ weeks
+• Loss of interest in things you loved
+• Changes in appetite or sleep
+• Thoughts of self-harm
+• Can't do daily activities
+• Using substances to cope
+• Panic attacks
+• Hearing voices or seeing things
 
-**for preventive care:**
+for sexual health:
 
-🌸 **recommended:**
-• annual well-woman visit
-• pap smear: starting at 21, then every 3-5 years
-• breast exams: clinical exams and self-exams
-• std testing if sexually active
-• vaccinations
-• blood pressure check
-• cholesterol screening (starting at 20)
+💕 see a doctor if:
+• Pain during sex
+• Unusual discharge (color, smell, amount)
+• Sores, bumps, or blisters
+• Burning with urination
+• Missed period
+• Concern about STI exposure
+• Irregular bleeding
 
-**questions to ask your doctor:**
-• "is this normal for someone my age?"
-• "what tests do you recommend?"
-• "how often should i come back?"
-• "what symptoms should i watch for?"
+for preventive care:
 
-**trust your gut!** if something feels wrong, get it checked. better to be safe.
+🌸 recommended schedule:
+• Annual well-woman visit (yearly)
+• Pap smear: starting at 21, then every 3-5 years
+• HPV test: starting at 30, every 5 years with Pap
+• Breast exams: clinical exam yearly, self-exams monthly
+• STD testing: if sexually active (yearly or with new partners)
+• Blood pressure check (yearly)
+• Cholesterol screening: starting at 20, then every 4-6 years
+• Diabetes screening: based on risk factors
+• Vaccinations: HPV, flu, Tdap, etc.
+
+questions to ask your doctor:
+• "Is this normal for someone my age?"
+• "What tests do you recommend?"
+• "How often should I come back?"
+• "What symptoms should I watch for?"
+• "Are there lifestyle changes I should make?"
+• "What are the side effects of this medication?"
+
+trust your gut! If something feels wrong, get it checked. Better to be safe.
 
 what specific symptom are you worried about? 💕"""
     
     def answer_general(self, question):
-        return """🌸 **i'm here to help!**
+        return """🌸 i'm here to help!
 
-i can answer questions about:
+I can answer questions about all aspects of women's health:
 
-**period & menstrual health:**
-• period pain and cramps
-• irregular cycles
-• heavy bleeding
-• pms and pmdd
+period & menstrual health:
+• Period pain and cramps
+• Irregular cycles
+• Heavy bleeding
+• PMS and PMDD
+• Missed or late periods
+• Spotting between periods
 
-**physical health:**
-• fatigue and low energy
-• headaches and migraines
-• sleep problems
-• skin issues (acne, breakouts)
-• weight concerns
+physical health:
+• Fatigue and low energy
+• Headaches and migraines
+• Sleep problems
+• Skin issues (acne, breakouts)
+• Weight concerns
+• Digestive issues (bloating, nausea)
+• Breast health
+• Hair changes
 
-**reproductive health:**
-• pregnancy and fertility
-• birth control questions
-• when to see a doctor
+reproductive health:
+• Pregnancy and fertility
+• Birth control options
+• Sexual health
+• STIs and infections
+• When to see a doctor
 
-**mental wellness:**
-• mood swings
-• anxiety and stress
-• emotional health
-
-**what would you like to know more about?** 💕
+mental wellness:
+• Mood swings
+• Anxiety and stress
+• Depression
+• Emotional health
 
 just ask me anything - i'm here to listen and help!
 
-*remember: i provide general information, not medical advice. always consult a healthcare provider for personal concerns.*"""
+what's on your mind today? 💕
+
+remember: i provide general information, not medical advice. always consult a healthcare provider for personal concerns."""
 
 # Initialize AI
-ai = SmartWomenHealthAI()
+ai = UltraSmartWomenHealthAI()
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
@@ -789,5 +1673,5 @@ def chat():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
-    print(f"🚀 Starting smart women's health AI on port {port}")
+    print(f"🚀 Starting ultra smart women's health AI on port {port}")
     app.run(host='0.0.0.0', port=port)
