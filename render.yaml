@@ -3,5 +3,5 @@ services:
     name: her-health-matters
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn server:app
+    startCommand: python server.py
     plan: free
